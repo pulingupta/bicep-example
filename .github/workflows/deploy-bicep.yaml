@@ -1,0 +1,44 @@
+name: Deploy Bicep to Azure
+
+on:
+  push:
+    branches:
+      - mainsd  # Replace with your repository's main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # You can choose a different runner if needed
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Install Bicep
+      run: |
+        curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+        chmod +x bicep
+        sudo mv bicep /usr/local/bin/
+      shell: bash
+
+    - name: Build Bicep files
+      run: az bicep build -f ./path/to/your/main.bicep
+      continue-on-error: true  # If there are no Bicep files, the job should continue
+
+    - name: Deploy ARM templates to Azure
+      run: |
+        az deployment group create \
+          --resource-group YourResourceGroup \
+          --template-file ./path/to/your/main.json  # Use the generated ARM template
+      env:
+        AZURE_CORE_OUTPUT: table
+
+    - name: Clean up
+      run: |
+        rm ./path/to/your/main.json  # Remove generated ARM template
+      continue-on-error: true
+

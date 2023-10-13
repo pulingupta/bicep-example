@@ -1,0 +1,32 @@
+name: Deploy Bicep
+
+on:
+  push:
+    branches:
+      - main  # Change this to match the branch you want to trigger on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Install Bicep
+      run: |
+        curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+        chmod +x bicep
+        sudo mv bicep /usr/local/bin/
+      shell: bash
+
+    - name: Build Bicep
+      run: |
+        bicep build main.bicep
+      env:
+        AZURE_CORE_OUTPUT: table
