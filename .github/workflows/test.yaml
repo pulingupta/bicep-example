@@ -13,10 +13,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Azure CLI
-      uses: Azure/CLI@v1
-      with:
-        azcliversion: "latest"
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        az --version
     
     - name: Check version
       run: az --version
