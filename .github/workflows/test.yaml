@@ -24,9 +24,7 @@ jobs:
         run: |
           az account show
           az group list
-      - name: deploy
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          # resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./main.bicep
+      - name: Deploy Bicep Template
+        run: az deployment sub create --name GitHubActionsDeployment --location WestEurope --template-file ./main.bicep --parameters location=WestEurope
+        # env:
+        #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
