@@ -25,6 +25,6 @@ jobs:
           az account show
           az group list
       - name: Deploy Bicep Template
-        run: az deployment sub create --name GitHubActionsDeployment --location WestEurope --template-file main.bicep --parameters location=WestEurope
+        run: az deployment sub create --name GitHubActionsDeployment --location WestEurope --template-file ./main.bicep --parameters location=WestEurope
         # env:
         #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
