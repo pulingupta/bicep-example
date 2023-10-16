@@ -26,7 +26,7 @@ jobs:
           az group list
       - name: Deploy Bicep Template
         run: |
-          bicep build main.bicep
+          bicep build ./main.bicep
           az deployment sub create --name GitHubActionsDeployment --template-file main.json
         
         # run: az deployment sub create --name GitHubActionsDeployment --location WestEurope --template-file ./main.bicep --parameters location=WestEurope
