@@ -15,7 +15,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      - name: Verify File Existence
+        run: |
+          if [ -f ./main.bicep ]; then
+            echo "File 'main.bicep' exists."
+          else
+            echo "File 'main.bicep' does not exist."
+            exit 1  # Optionally, you can fail the workflow if the file is not found.
+          fi
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
