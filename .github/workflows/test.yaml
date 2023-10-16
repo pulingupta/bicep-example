@@ -34,10 +34,15 @@ jobs:
         run: |
           az account show
           az group list
+      
+      - name: Set Working Directory to Repository Root
+        run: cd $GITHUB_WORKSPACE
+
       - name: Deploy Bicep Template
         run: |
           bicep build ../main.bicep
           az deployment sub create --name GitHubActionsDeployment --template-file main.json
+        working-directory: .
         
         # run: az deployment sub create --name GitHubActionsDeployment --location WestEurope --template-file ./main.bicep --parameters location=WestEurope
         # env:
