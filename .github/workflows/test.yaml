@@ -24,3 +24,9 @@ jobs:
         run: |
           az account show
           az group list
+      - name: deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          # resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./main.bicep
