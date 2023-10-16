@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main  # Change this to match the branch you want to trigger on
-
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
   build:
     runs-on: ubuntu-latest
