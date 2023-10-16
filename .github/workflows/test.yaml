@@ -16,7 +16,7 @@ jobs:
     - name: Set up Azure CLI
       uses: Azure/CLI@v1
       with:
-        azcliversion: 'latest'
+        azcliversion: "latest"
     
     - name: Check version
       run: az --version
